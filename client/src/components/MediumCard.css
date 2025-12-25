@@ -1,0 +1,125 @@
+.medium-card {
+  background: #1e1e2e;
+  border-radius: 12px;
+  overflow: hidden;
+  border: 1px solid #2a2a3e;
+  transition: all 0.3s ease;
+  text-decoration: none;
+  color: inherit;
+  display: block;
+}
+
+.medium-card:hover {
+  transform: translateY(-8px);
+  border-color: #00d4ff;
+  box-shadow: 0 20px 40px rgba(0, 212, 255, 0.2);
+}
+
+.medium-image-container {
+  position: relative;
+  width: 100%;
+  height: 200px;
+  overflow: hidden;
+}
+
+.medium-image {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+}
+
+.medium-card:hover .medium-image {
+  transform: scale(1.1);
+}
+
+.medium-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background: linear-gradient(to bottom, transparent, rgba(10, 10, 10, 0.8));
+}
+
+.medium-content {
+  padding: 1.5rem;
+}
+
+.medium-title {
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin-bottom: 0.5rem;
+  background: linear-gradient(135deg, #00d4ff 0%, #7b2ff7 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+}
+
+.medium-description {
+  color: #b0b0b0;
+  font-size: 0.95rem;
+  line-height: 1.5;
+}
+
+.medium-card-wrapper {
+  position: relative;
+  display: inline-block;
+  width: 100%;
+}
+
+.medium-actions {
+  position: absolute;
+  top: 1rem;
+  right: 1rem;
+  display: flex;
+  gap: 0.5rem;
+  opacity: 0;
+  transition: opacity 0.3s ease;
+}
+
+.medium-card-wrapper:hover .medium-actions {
+  opacity: 1;
+}
+
+.btn-icon {
+  width: 40px;
+  height: 40px;
+  border-radius: 50%;
+  border: none;
+  font-size: 1.2rem;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
+}
+
+.btn-edit {
+  background: rgba(0, 212, 255, 0.2);
+  color: #00d4ff;
+  border: 1px solid #00d4ff;
+}
+
+.btn-edit:hover {
+  background: #00d4ff;
+  color: #0a0a0a;
+  transform: scale(1.1);
+}
+
+.btn-delete {
+  background: rgba(255, 59, 48, 0.2);
+  color: #ff3b30;
+  border: 1px solid #ff3b30;
+}
+
+.btn-delete:hover:not(:disabled) {
+  background: #ff3b30;
+  color: #0a0a0a;
+  transform: scale(1.1);
+}
+
+.btn-delete:disabled {
+  opacity: 0.5;
+  cursor: not-allowed;
+}
