@@ -124,19 +124,20 @@ const ItemCard = ({ item, viewMode = 'grid', onUpdate, onDelete, isWishlist = fa
           <div className="item-image-container-list">
             <img src={item.imageUrl} alt={item.title} className="item-image" />
           </div>
-          <div className="item-content-list">
-            <h3 className="item-title">{item.title}</h3>
-            <p className="item-creator">by {item.creator}</p>
-            <p className="item-description">{item.description}</p>
-            <div className="item-rating">
-              <StarRating 
-                rating={rating} 
-                onRatingChange={handleRatingChange}
-                readonly={isUpdating}
-              />
+          <div className="item-content-wrapper">
+            <div className="item-content-list">
+              <h3 className="item-title">{item.title}</h3>
+              <p className="item-creator">by {item.creator}</p>
+              <p className="item-description">{item.description}</p>
+              <div className="item-rating">
+                <StarRating 
+                  rating={rating} 
+                  onRatingChange={handleRatingChange}
+                  readonly={isUpdating}
+                />
+              </div>
             </div>
-          </div>
-          <div className="item-actions">
+            <div className="item-actions">
             <button 
               className={`btn-icon btn-wishlist ${item.isWishlist ? 'active' : ''}`}
               onClick={handleWishlistToggle}
@@ -180,6 +181,7 @@ const ItemCard = ({ item, viewMode = 'grid', onUpdate, onDelete, isWishlist = fa
             >
               🗑
             </button>
+          </div>
           </div>
         </div>
 
