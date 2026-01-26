@@ -4,9 +4,10 @@ import ItemCard from '../components/ItemCard';
 import Modal from '../components/Modal';
 import EditItemForm from '../components/EditItemForm';
 import SearchFilters from '../components/SearchFilters';
-import { getMedium, getWishlistItemsByMedium, updateItem } from '../services/api';
+import { getMedium, getInProgressItemsByMedium, updateItem } from '../services/api';
+import './InProgressDetail.css';
 
-const WishlistDetail = () => {
+const InProgressDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [medium, setMedium] = useState(null);
@@ -34,14 +35,14 @@ const WishlistDetail = () => {
       setLoading(true);
       const [mediumData, itemsData] = await Promise.all([
         getMedium(id),
-        getWishlistItemsByMedium(id)
+        getInProgressItemsByMedium(id)
       ]);
       setMedium(mediumData);
       setItems(itemsData);
       setFilteredItems(itemsData);
       setError(null);
     } catch (err) {
-      setError('Failed to load wishlist items. Please try again.');
+      setError('Failed to load in progress items. Please try again.');
       console.error(err);
     } finally {
       setLoading(false);
@@ -98,6 +99,7 @@ const WishlistDetail = () => {
       case 'newest':
       default:
         sorted.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+        break;
     }
     return sorted;
   };
@@ -155,13 +157,13 @@ const WishlistDetail = () => {
   }
 
   const handleItemUpdate = (updatedItem) => {
-    if (updatedItem.isWishlist) {
-      // Item is still in wishlist, update it
+    if (updatedItem.isInProgress) {
+      // Item is still in progress, update it
       setItems(items.map(item => 
         item._id === updatedItem._id ? updatedItem : item
       ));
     } else {
-      // Item moved out of wishlist, remove it
+      // Item moved out of in progress, remove it
       setItems(items.filter(item => item._id !== updatedItem._id));
     }
   };
@@ -175,8 +177,8 @@ const WishlistDetail = () => {
       <div className="container">
         <div className="medium-detail-header">
           <div>
-            <p style={{ color: '#ffd700', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>
-              WISHLIST
+            <p style={{ color: '#ff6b35', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>
+              IN PROGRESS
             </p>
             <p style={{ color: '#b0b0b0', fontSize: '1.1rem', marginBottom: '2rem' }}>
               {medium.description}
@@ -185,8 +187,8 @@ const WishlistDetail = () => {
           <div className="medium-detail-actions">
             <button 
               className="btn" 
-              onClick={() => navigate('/wishlist')}
-              title="Back to wishlist"
+              onClick={() => navigate('/inprogress')}
+              title="Back to in progress"
             >
               ← Back
             </button>
@@ -201,26 +203,24 @@ const WishlistDetail = () => {
 
         <div className="view-toggle">
           <button 
-            className={viewMode === 'grid' ? 'active' : ''} 
+            className={`view-btn ${viewMode === 'grid' ? 'active' : ''}`}
             onClick={() => setViewMode('grid')}
+            title="Grid view"
           >
-            Grid View
+            ⊞ Grid
           </button>
           <button 
-            className={viewMode === 'list' ? 'active' : ''} 
+            className={`view-btn ${viewMode === 'list' ? 'active' : ''}`}
             onClick={() => setViewMode('list')}
+            title="List view"
           >
-            List View
+            ☰ List
           </button>
         </div>
 
-        {items.length === 0 ? (
+        {filteredItems.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#666', fontSize: '1.2rem' }}>
-            No items in this wishlist yet!
-          </p>
-        ) : filteredItems.length === 0 ? (
-          <p style={{ textAlign: 'center', color: '#666', fontSize: '1.2rem' }}>
-            No items match your search or filters. Try adjusting your criteria.
+            No items in progress in this medium
           </p>
         ) : (
           <div className={viewMode === 'grid' ? 'grid' : 'list-view'}>
@@ -231,7 +231,7 @@ const WishlistDetail = () => {
                 viewMode={viewMode}
                 onUpdate={handleItemUpdate}
                 onDelete={handleItemDelete}
-                isWishlist={true}
+                isWishlist={false}
               />
             ))}
           </div>
@@ -246,9 +246,9 @@ const WishlistDetail = () => {
         >
           <EditItemForm 
             item={selectedItem}
-            onSuccess={(updatedItem) => {
-              handleItemUpdate(updatedItem);
+            onSuccess={() => {
               setIsEditModalOpen(false);
+              fetchData();
             }}
             onCancel={() => setIsEditModalOpen(false)}
           />
@@ -258,4 +258,4 @@ const WishlistDetail = () => {
   );
 };
 
-export default WishlistDetail;
+export default InProgressDetail;

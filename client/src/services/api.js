@@ -75,3 +75,62 @@ export const toggleWishlist = async (id, isWishlist) => {
   const response = await axios.patch(`${API_BASE_URL}/items/${id}`, { isWishlist });
   return response.data;
 };
+
+// Consumed API calls
+export const getConsumedItems = async () => {
+  const response = await axios.get(`${API_BASE_URL}/items/consumed/all`);
+  return response.data;
+};
+
+export const getConsumedItemsByMedium = async (mediumId) => {
+  const response = await axios.get(`${API_BASE_URL}/items/consumed/medium/${mediumId}`);
+  return response.data;
+};
+
+export const toggleConsumed = async (id, isConsumed) => {
+  const response = await axios.patch(`${API_BASE_URL}/items/${id}`, { isConsumed });
+  return response.data;
+};
+
+// In Progress API calls
+export const getInProgressItems = async () => {
+  const response = await axios.get(`${API_BASE_URL}/items/inprogress/all`);
+  return response.data;
+};
+
+export const getInProgressItemsByMedium = async (mediumId) => {
+  const response = await axios.get(`${API_BASE_URL}/items/inprogress/medium/${mediumId}`);
+  return response.data;
+};
+
+export const toggleInProgress = async (id, isInProgress) => {
+  const response = await axios.patch(`${API_BASE_URL}/items/${id}`, { isInProgress });
+  return response.data;
+};
+
+// Search API calls
+export const searchMediums = async (query, filters = {}) => {
+  const params = new URLSearchParams();
+  params.append('query', query);
+  
+  if (filters.ratingMin !== undefined) params.append('ratingMin', filters.ratingMin);
+  if (filters.ratingMax !== undefined) params.append('ratingMax', filters.ratingMax);
+  if (filters.dateFilter) params.append('dateFilter', filters.dateFilter);
+  if (filters.sortBy) params.append('sortBy', filters.sortBy);
+
+  const response = await axios.get(`${API_BASE_URL}/mediums/search?${params.toString()}`);
+  return response.data;
+};
+
+export const searchItems = async (query, filters = {}) => {
+  const params = new URLSearchParams();
+  params.append('query', query);
+  
+  if (filters.ratingMin !== undefined) params.append('ratingMin', filters.ratingMin);
+  if (filters.ratingMax !== undefined) params.append('ratingMax', filters.ratingMax);
+  if (filters.dateFilter) params.append('dateFilter', filters.dateFilter);
+  if (filters.sortBy) params.append('sortBy', filters.sortBy);
+
+  const response = await axios.get(`${API_BASE_URL}/items/search?${params.toString()}`);
+  return response.data;
+};

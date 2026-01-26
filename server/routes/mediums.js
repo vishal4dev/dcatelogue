@@ -12,6 +12,48 @@ router.get('/', async (req, res) => {
   }
 });
 
+// Search mediums
+router.get('/search', async (req, res) => {
+  try {
+    const { query = '', sortBy = 'newest' } = req.query;
+    
+    // Build search filter
+    const searchFilter = query 
+      ? {
+          $or: [
+            { title: { $regex: query, $options: 'i' } },
+            { description: { $regex: query, $options: 'i' } }
+          ]
+        }
+      : {};
+
+    // Build sort
+    let sortCriteria = { createdAt: -1 };
+    switch (sortBy) {
+      case 'oldest':
+        sortCriteria = { createdAt: 1 };
+        break;
+      case 'name':
+        sortCriteria = { title: 1 };
+        break;
+      case 'rating-high':
+        sortCriteria = { averageRating: -1, createdAt: -1 };
+        break;
+      case 'rating-low':
+        sortCriteria = { averageRating: 1, createdAt: -1 };
+        break;
+      case 'newest':
+      default:
+        sortCriteria = { createdAt: -1 };
+    }
+
+    const mediums = await Medium.find(searchFilter).sort(sortCriteria);
+    res.json(mediums);
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+});
+
 // Get single medium
 router.get('/:id', async (req, res) => {
   try {

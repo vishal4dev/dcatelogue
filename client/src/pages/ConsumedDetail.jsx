@@ -4,9 +4,9 @@ import ItemCard from '../components/ItemCard';
 import Modal from '../components/Modal';
 import EditItemForm from '../components/EditItemForm';
 import SearchFilters from '../components/SearchFilters';
-import { getMedium, getWishlistItemsByMedium, updateItem } from '../services/api';
+import { getMedium, getConsumedItemsByMedium, updateItem } from '../services/api';
 
-const WishlistDetail = () => {
+const ConsumedDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
   const [medium, setMedium] = useState(null);
@@ -34,14 +34,14 @@ const WishlistDetail = () => {
       setLoading(true);
       const [mediumData, itemsData] = await Promise.all([
         getMedium(id),
-        getWishlistItemsByMedium(id)
+        getConsumedItemsByMedium(id)
       ]);
       setMedium(mediumData);
       setItems(itemsData);
       setFilteredItems(itemsData);
       setError(null);
     } catch (err) {
-      setError('Failed to load wishlist items. Please try again.');
+      setError('Failed to load consumed items. Please try again.');
       console.error(err);
     } finally {
       setLoading(false);
@@ -155,13 +155,13 @@ const WishlistDetail = () => {
   }
 
   const handleItemUpdate = (updatedItem) => {
-    if (updatedItem.isWishlist) {
-      // Item is still in wishlist, update it
+    if (updatedItem.isConsumed) {
+      // Item is still consumed, update it
       setItems(items.map(item => 
         item._id === updatedItem._id ? updatedItem : item
       ));
     } else {
-      // Item moved out of wishlist, remove it
+      // Item moved out of consumed, remove it
       setItems(items.filter(item => item._id !== updatedItem._id));
     }
   };
@@ -175,8 +175,8 @@ const WishlistDetail = () => {
       <div className="container">
         <div className="medium-detail-header">
           <div>
-            <p style={{ color: '#ffd700', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>
-              WISHLIST
+            <p style={{ color: '#00c8c8', fontSize: '0.9rem', marginBottom: '0.5rem', fontWeight: '600' }}>
+              CONSUMED
             </p>
             <p style={{ color: '#b0b0b0', fontSize: '1.1rem', marginBottom: '2rem' }}>
               {medium.description}
@@ -185,8 +185,8 @@ const WishlistDetail = () => {
           <div className="medium-detail-actions">
             <button 
               className="btn" 
-              onClick={() => navigate('/wishlist')}
-              title="Back to wishlist"
+              onClick={() => navigate('/consumed')}
+              title="Back to consumed"
             >
               ← Back
             </button>
@@ -216,7 +216,7 @@ const WishlistDetail = () => {
 
         {items.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#666', fontSize: '1.2rem' }}>
-            No items in this wishlist yet!
+            No consumed items in this medium yet!
           </p>
         ) : filteredItems.length === 0 ? (
           <p style={{ textAlign: 'center', color: '#666', fontSize: '1.2rem' }}>
@@ -225,14 +225,15 @@ const WishlistDetail = () => {
         ) : (
           <div className={viewMode === 'grid' ? 'grid' : 'list-view'}>
             {filteredItems.map((item) => (
-              <ItemCard 
-                key={item._id}
-                item={item} 
-                viewMode={viewMode}
-                onUpdate={handleItemUpdate}
-                onDelete={handleItemDelete}
-                isWishlist={true}
-              />
+              <div key={item._id} className="wishlist-item-wrapper">
+                <ItemCard 
+                  item={item} 
+                  viewMode={viewMode}
+                  onUpdate={handleItemUpdate}
+                  onDelete={handleItemDelete}
+                  isWishlist={false}
+                />
+              </div>
             ))}
           </div>
         )}
@@ -258,4 +259,4 @@ const WishlistDetail = () => {
   );
 };
 
-export default WishlistDetail;
+export default ConsumedDetail;

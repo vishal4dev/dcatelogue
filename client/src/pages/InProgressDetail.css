@@ -1,0 +1,120 @@
+/* In Progress Detail Styles */
+
+.inprogress-header {
+  margin-bottom: 2rem;
+}
+
+.item-progress-wrapper {
+  position: relative;
+  margin-bottom: 1.5rem;
+}
+
+.progress-indicator {
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 3px;
+  background: linear-gradient(90deg, #ff6b35 0%, #ff8c42 50%, #ffa54d 100%);
+  border-radius: 2px;
+  overflow: hidden;
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.5);
+}
+
+.progress-animation {
+  height: 100%;
+  background: linear-gradient(90deg, 
+    transparent 0%, 
+    #ff6b35 25%, 
+    #ffa54d 50%, 
+    #ff6b35 75%, 
+    transparent 100%);
+  animation: shimmer 2s infinite;
+  box-shadow: 0 0 15px rgba(255, 107, 53, 0.8);
+}
+
+@keyframes shimmer {
+  0% {
+    transform: translateX(-100%);
+  }
+  100% {
+    transform: translateX(100%);
+  }
+}
+
+/* Alternative: Pulse animation */
+.progress-pulse {
+  animation: pulsing 2s ease-in-out infinite;
+}
+
+@keyframes pulsing {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 107, 53, 0.5), inset 0 0 10px rgba(255, 107, 53, 0.2);
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.8), inset 0 0 10px rgba(255, 107, 53, 0.4);
+  }
+}
+
+/* Glow effect around active in-progress items */
+.inprogress-item-card {
+  position: relative;
+  border: 1px solid #ff6b35;
+  animation: glow-border 2s ease-in-out infinite;
+}
+
+@keyframes glow-border {
+  0%, 100% {
+    box-shadow: 0 0 10px rgba(255, 107, 53, 0.3);
+    border-color: #ff6b35;
+  }
+  50% {
+    box-shadow: 0 0 20px rgba(255, 107, 53, 0.6);
+    border-color: #ffa54d;
+  }
+}
+
+/* Status badge */
+.inprogress-badge {
+  display: inline-block;
+  padding: 0.25rem 0.75rem;
+  background: linear-gradient(135deg, #ff6b35 0%, #ffa54d 100%);
+  color: #0a0a0a;
+  border-radius: 20px;
+  font-size: 0.75rem;
+  font-weight: 600;
+  margin-top: 0.5rem;
+  animation: pulse-badge 2s ease-in-out infinite;
+}
+
+@keyframes pulse-badge {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+  50% {
+    transform: scale(1.05);
+    opacity: 0.9;
+  }
+}
+
+/* Status indicator dot */
+.progress-status-dot {
+  display: inline-block;
+  width: 10px;
+  height: 10px;
+  background: #ff6b35;
+  border-radius: 50%;
+  margin-right: 0.5rem;
+  animation: dot-pulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 10px rgba(255, 107, 53, 0.8);
+}
+
+@keyframes dot-pulse {
+  0%, 100% {
+    box-shadow: 0 0 5px rgba(255, 107, 53, 0.5);
+  }
+  50% {
+    box-shadow: 0 0 15px rgba(255, 107, 53, 1);
+  }
+}

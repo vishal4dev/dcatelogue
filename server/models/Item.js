@@ -35,6 +35,18 @@ const itemSchema = new mongoose.Schema({
   isWishlist: {
     type: Boolean,
     default: false
+  },
+  isLiked: {
+    type: Boolean,
+    default: false
+  },
+  isConsumed: {
+    type: Boolean,
+    default: false
+  },
+  isInProgress: {
+    type: Boolean,
+    default: false
   }
 }, {
   timestamps: true

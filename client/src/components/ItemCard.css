@@ -65,6 +65,35 @@
   background: linear-gradient(to bottom, transparent, rgba(10, 10, 10, 0.8));
 }
 
+.item-progress-badge {
+  position: absolute;
+  bottom: 1rem;
+  left: 1rem;
+  right: 1rem;
+  padding: 0.5rem 0.75rem;
+  background: linear-gradient(135deg, #ff6b35 0%, #ffa54d 100%);
+  color: #0a0a0a;
+  border-radius: 6px;
+  font-size: 0.85rem;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  animation: badge-pulse 2s ease-in-out infinite;
+  box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+}
+
+@keyframes badge-pulse {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: 0 4px 15px rgba(255, 107, 53, 0.4);
+  }
+  50% {
+    transform: translateY(-2px) scale(1.02);
+    box-shadow: 0 6px 20px rgba(255, 107, 53, 0.6);
+  }
+}
+
 .item-content {
   padding: 1.5rem;
   display: flex;
@@ -220,4 +249,90 @@
 
 .btn-wishlist.active:hover {
   transform: scale(1.15);
+}
+
+.btn-liked {
+  background: rgba(255, 105, 180, 0.2);
+  color: #ff69b4;
+  border: 1px solid #ff69b4;
+}
+
+.btn-liked:hover {
+  background: #ff69b4;
+  color: #0a0a0a;
+  transform: scale(1.1);
+}
+
+.btn-liked.active {
+  background: #ff69b4;
+  color: #0a0a0a;
+  font-weight: bold;
+}
+
+.btn-liked.active:hover {
+  transform: scale(1.15);
+}
+
+.btn-watched {
+  background: rgba(0, 200, 200, 0.2);
+  color: #00c8c8;
+  border: 1px solid #00c8c8;
+}
+
+.btn-watched:hover {
+  background: #00c8c8;
+  color: #0a0a0a;
+  transform: scale(1.1);
+}
+
+.btn-watched.active {
+  background: #00c8c8;
+  color: #0a0a0a;
+  font-weight: bold;
+}
+
+.btn-watched.active:hover {
+  transform: scale(1.15);
+}
+
+.btn-inprogress {
+  background: rgba(255, 107, 53, 0.2);
+  color: #ff6b35;
+  border: 1px solid #ff6b35;
+}
+
+.btn-inprogress:hover {
+  background: #ff6b35;
+  color: #0a0a0a;
+  transform: scale(1.1);
+}
+
+.btn-inprogress.active {
+  background: #ff6b35;
+  color: #0a0a0a;
+  font-weight: bold;
+}
+
+.btn-inprogress.active:hover {
+  transform: scale(1.15);
+}
+
+/* Progress status indicator dot */
+.progress-status-dot {
+  display: inline-block;
+  width: 8px;
+  height: 8px;
+  background: #0a0a0a;
+  border-radius: 50%;
+  animation: dot-pulse 1.5s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(255, 107, 53, 0.8);
+}
+
+@keyframes dot-pulse {
+  0%, 100% {
+    box-shadow: 0 0 4px rgba(255, 107, 53, 0.6);
+  }
+  50% {
+    box-shadow: 0 0 12px rgba(255, 107, 53, 1);
+  }
 }
